@@ -1,5 +1,8 @@
-import React from "react"
-import { PublicKey } from "@solana/web3.js"
+import React, { useEffect, useState } from "react"
+import CreateProduct from "../components/CreateProduct"
+import Product from "../components/Product"
+import HeadComponent from "../components/Head"
+
 import { useWallet } from "@solana/wallet-adapter-react"
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 
@@ -9,6 +12,22 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`
 
 const App = () => {
   const { publicKey } = useWallet()
+  const isOwner = publicKey
+    ? publicKey.toString() === process.env.NEXT_PUBLIC_OWNER_PUBLIC_KEY
+    : false
+  const [creating, setCreating] = useState(false)
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    if (publicKey) {
+      fetch(`/api/fetchProducts`)
+        .then((response) => response.json())
+        .then((data) => {
+          setProducts(data)
+          console.log("Products", data)
+        })
+    }
+  }, [publicKey])
 
   const renderNotConnectedContainer = () => (
     <div>
@@ -20,17 +39,31 @@ const App = () => {
     </div>
   )
 
+  const renderItemBuyContainer = () => (
+    <div className="products-container">
+      {products.map((product) => (
+        <Product key={product.id} product={product} />
+      ))}
+    </div>
+  )
+
   return (
     <div className="App">
+      <HeadComponent />
       <div className="container">
         <header className="header-container">
-          <p className="header"> 😳 WEB3DEV Emoji Store 😈</p>
-          <p className="sub-text">The only emoji store that accepts sh*tcoins</p>
+          <p className="header"> 😳 WEB3DEV Song Store 😈</p>
+          <p className="sub-text">The best songs for a few sh*tcoins</p>
+          {isOwner && (
+            <button className="create-product-button" onClick={() => setCreating(!creating)}>
+              {creating ? "Close" : "Create Product"}
+            </button>
+          )}
         </header>
 
         <main>
-          {/* We only render the connect button if public key doesn't exist */}
-          {publicKey ? "Connected!" : renderNotConnectedContainer()}
+          {creating && <CreateProduct />}
+          {publicKey ? renderItemBuyContainer() : renderNotConnectedContainer()}
         </main>
 
         <div className="footer-container">
