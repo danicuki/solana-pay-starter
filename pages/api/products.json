@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Daniella Alcarpe - Dinda",
-    "price": "0.09",
+    "price": "1.00",
     "description": "Chorinho Lindo",
     "image_url": "https://i.imgur.com/aWMs25Z.jpeg",
     "filename": "dinda.mp3",
@@ -11,7 +11,7 @@
   {
     "id": 2,
     "name": "Daniella Alcarpe - Tô Feliz",
-    "price": "0.09",
+    "price": "2.00",
     "description": "Samba Incrível",
     "image_url": "https://i.imgur.com/ju67vxO.png",
     "filename": "to_feliz.mp3",
@@ -20,7 +20,7 @@
   {
     "id": 3,
     "name": "Acho - Daniella Alcarpe",
-    "price": "10",
+    "price": "3.00",
     "image_url": "https://i.imgur.com/Jdf4Daz.png",
     "description": "Lindo demais",
     "filename": "01 Acho.mp3",
